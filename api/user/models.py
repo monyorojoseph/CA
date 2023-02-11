@@ -21,12 +21,14 @@ class CustomUserManager(BaseUserManager):
         return user
 
 class CustomUser(LifecycleModelMixin, AbstractBaseUser):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     email = models.EmailField(max_length=50, unique=True)
     timestamp = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 
+    full_name = models.CharField(max_length=200, null=True)
+    
     objects = CustomUserManager()
 
     USERNAME_FIELD = 'email'
