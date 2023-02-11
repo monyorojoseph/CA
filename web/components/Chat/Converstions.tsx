@@ -1,4 +1,4 @@
-export default function Chats(){
+export default function Conversations(){
     return (
         <div className="border border-neutral-400 divide-y-2 
         border-r-0 overflow-y-auto h-full">
