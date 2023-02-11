@@ -1,8 +1,10 @@
+import Chat from "../components/Chat/Chat";
+import Layout from "../components/Layout/Layout";
 
 export default function Home() {
   return (
-    <div className="container mx-auto">
-      <h1>Hey looser</h1>
-    </div>
+    <Layout>
+      <Chat />
+    </Layout>
   )
 }
