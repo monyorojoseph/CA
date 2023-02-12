@@ -26,5 +26,7 @@ export interface Message {
 
 export interface Convo {
     name: string;
-    approved: boolean
+    approved: boolean;
+    other_user: string;
+    last_message: Message;
 }

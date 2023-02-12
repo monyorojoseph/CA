@@ -13,7 +13,7 @@ class Conversation(models.Model):
 # conversation message
 class Message(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    conversation = models.ForeignKey('Conversation', on_delete=models.CASCADE, related_name='converastion_messages')
+    conversation = models.ForeignKey('Conversation', on_delete=models.CASCADE, related_name='conversation_messages')
     sender = models.ForeignKey('user.CustomUser', related_name='sender_messages', on_delete=models.SET_NULL, null=True)
     receiver = models.ForeignKey('user.CustomUser', related_name='reciever_messages', on_delete=models.SET_NULL, null=True)
     data = models.TextField()

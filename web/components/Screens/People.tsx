@@ -1,24 +1,21 @@
 import { BiMessageDetail } from 'react-icons/bi'
 import { usePeople, useUser } from '../../swr/user'
 import { Person } from '../../utils/types'
-import { useRouter } from 'next/router'
 import { TABS } from './MainScreen'
 
-export default function People({tab, setTab}:{
-    tab: string
-    setTab: Function
+export default function People({setTab, setConversationName}:{
+    setTab: Function;
+    setConversationName: Function;
 }){
     const { people, loading } = usePeople()
     const { user } = useUser()
-
-    const router = useRouter()
 
     const createConversationName = (otherId: string)=> {
         const ids = [otherId, user.id ]
         ids.sort()
         const name = `${ids[0]}__${ids[1]}`
-        router.push({ query: { ...router.query, 'conversation_name': name } }, undefined, { shallow: true });
         setTab(TABS.Chats)
+        setConversationName(name)
     }
 
     return (

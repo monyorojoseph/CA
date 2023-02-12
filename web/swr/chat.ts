@@ -9,5 +9,11 @@ export const userConversations = ()=> {
 // get message history
 export const userMessageHistory = (conversation_name: string)=> {
     const { data, isLoading, error } = useSWR(`/chat/message-history/${conversation_name}/`, getService)
-    return { messageHistory: data?.data, Loading:isLoading, error }
+    return { messages: data?.data, Loading:isLoading, error }
+}
+
+// get conversation details
+export const userConversation = (name: string)=> {
+    const { data, isLoading, error } = useSWR(`/chat/conversation/${name}/`, getService)
+    return { conversation: data?.data, Loading:isLoading, error }
 }

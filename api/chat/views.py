@@ -22,5 +22,13 @@ class ConversationsAPI(APIView):
     def get(self, request, format=None):
         user = request.user
         conversations = user.my_conversations()
-        serializer = ConversationSerializer(conversations, many=True)
+        serializer = ConversationSerializer(conversations, many=True, context={'user': request.user})
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+# conversation details
+class ConversationDetailsAPI(APIView):
+    permission_classes = [ IsAuthenticated ]
+    def get(self, request, conversation_name, fomart=None):
+        conversation = get_object_or_404(Conversation, name=conversation_name)
+        serializer = ConversationSerializer(conversation, context={'user': request.user})
         return Response(serializer.data, status=status.HTTP_200_OK)
