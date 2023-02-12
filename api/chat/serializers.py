@@ -18,7 +18,7 @@ class ConversationSerializer(serializers.ModelSerializer):
         ids = obj.name.split('__')
         me = self.context['user']
         ids.remove(str(me.id))
-        return User.objects.get(id=ids[0]).full_name
+        return UserSerializer(User.objects.get(id=ids[0])).data
 
     def get_last_message(self, obj):
         msg = obj.conversation_messages.last()

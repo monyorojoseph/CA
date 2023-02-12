@@ -7,6 +7,11 @@ from rest_framework.views import APIView
 from .models import Conversation, Message
 from .serializers import ConversationSerializer, MessageSerializer
 
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
+
+channel_layer = get_channel_layer()
+
 # old messages
 class MessageHistoryAPI(APIView):
     permission_classes = [ IsAuthenticated ]
@@ -32,3 +37,31 @@ class ConversationDetailsAPI(APIView):
         conversation = get_object_or_404(Conversation, name=conversation_name)
         serializer = ConversationSerializer(conversation, context={'user': request.user})
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+# make audio call
+class AudioCallAPI(APIView):
+    permission_classes = [ IsAuthenticated ]
+    def post(self, request, format=None):
+        data = request.data
+        conversation_name = data['conversation_name']        
+        async_to_sync(channel_layer.group_send)({
+            conversation_name,            
+            {"type": "audio_call_echo",
+                "data": data['data']}
+        })
+        return Response(status=status.HTTP_200_OK)
+        
+
+    # make audio call
+class VideoCallAPI(APIView):
+    permission_classes = [ IsAuthenticated ]
+    def post(self, request, format=None):
+        data = request.data
+        conversation_name = data['conversation_name']        
+        async_to_sync(channel_layer.group_send)({
+            conversation_name,            
+            {"type": "video_call_echo",
+                "data": data['data']}
+        })
+        return Response(status=status.HTTP_200_OK)
+

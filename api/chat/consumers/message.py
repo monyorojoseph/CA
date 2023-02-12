@@ -60,7 +60,7 @@ class MessageConsumer(JsonWebsocketConsumer):
                  "message": MessageSerializer(message).data}
             )
         if content_type == 'read_messages':
-            messages = Message.objects.filter(converation=self.conversation, receiver=self.user)
+            messages = Message.objects.filter(conversation=self.conversation, receiver=self.user)
             messages.update(read=True)
 
         if content_type == 'delete_message':
@@ -81,6 +81,21 @@ class MessageConsumer(JsonWebsocketConsumer):
                 {"type": "react_message_echo",
                 "message": MessageSerializer(message).data}
             )
+        
+        if content_type == 'audio_call':
+            async_to_sync(self.channel_layer.group_send)(
+                self.conversation_name,
+                {"type": "audio_call_echo",
+                 "data": content['data']}
+            )
+
+        if content_type == 'video_call':
+            async_to_sync(self.channel_layer.group_send)(
+                self.conversation_name,
+                {"type": "video_call_echo",
+                 "data": content['data']}
+            )
+
 
 
     def chat_message_echo(self, event):

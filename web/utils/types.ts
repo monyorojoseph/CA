@@ -9,11 +9,6 @@ export interface Person {
     full_name: string
 }
 
-export interface User {
-    email: string;
-    id: string;
-}
-
 export interface Message {
     id: string;
     sender: Person;
@@ -27,6 +22,6 @@ export interface Message {
 export interface Convo {
     name: string;
     approved: boolean;
-    other_user: string;
+    other_user: Person;
     last_message: Message;
 }
