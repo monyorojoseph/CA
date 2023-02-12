@@ -1,9 +1,12 @@
 // token hook
-export const useCredentials = ()=> {
-    
+export const useCredentials: any = ()=> {
+    let access = ''
+    let refresh = ''    
     const credentials = JSON.parse(localStorage.getItem('credentials') as string)
-    const access = credentials['access']
-    const refresh = credentials['refresh']
+    if (credentials){
+        access = credentials['access']
+        refresh = credentials['refresh']
+    }
 
     return { access, refresh }
 }

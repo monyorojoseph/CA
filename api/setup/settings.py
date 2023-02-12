@@ -1,4 +1,5 @@
 from pathlib import Path
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -80,8 +81,12 @@ ASGI_APPLICATION = "setup.asgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "ca",
+        "USER": "postgres",
+        "HOST": "localhost",
+        "PASSWORD": "ginger",
+        "PORT": 5432
     }
 }
 
@@ -139,8 +144,12 @@ CHANNEL_LAYERS = {
     },
 }
 
+
 SIMPLE_JWT = {
-   'AUTH_HEADER_TYPES': ('token',),
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=5),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=10),
+
+    'AUTH_HEADER_TYPES': ('Bearer',)
 }
 
 DJOSER = {

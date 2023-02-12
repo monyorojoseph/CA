@@ -20,7 +20,7 @@ export default function MainScreen(){
         <main className="container mx-auto">
             { tab === TABS.Chats && <Chats />}
             { tab === TABS.Calls && <Calls />}
-            { tab === TABS.People && <People />}
+            { tab === TABS.People && <People tab={tab} setTab={setTab}/>}
         </main>
         <Footer />
         </div>
