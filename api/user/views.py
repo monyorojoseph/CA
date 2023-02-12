@@ -8,6 +8,6 @@ User = get_user_model()
 
 class ListPeopleAPI(APIView):
     def get(self, request, format=None):
-        people = User.objects.all()
+        people = User.objects.exclude(id=request.user.id)
         serializer = UserSerializer(people, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)

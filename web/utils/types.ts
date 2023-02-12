@@ -23,3 +23,8 @@ export interface Message {
     read: boolean;
     reaction: string;
 }
+
+export interface Convo {
+    name: string;
+    approved: boolean
+}
