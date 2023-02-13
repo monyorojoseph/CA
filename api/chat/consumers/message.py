@@ -24,6 +24,7 @@ class MessageConsumer(JsonWebsocketConsumer):
 
     
     def connect(self):
+        print("[ CONNECTED ] :: MESSAGE")
         # get  authenticated user or disconnect
         self.user = self.scope['user']
         if not self.user.is_authenticated:
@@ -39,7 +40,7 @@ class MessageConsumer(JsonWebsocketConsumer):
         self.accept()
 
     def disconnect(self, code):
-        
+        print("[ DISCONNECTED ] :: MESSAGE")
         async_to_sync(self.channel_layer.group_discard)(
             self.conversation_name, self.channel_name
         )
@@ -105,10 +106,4 @@ class MessageConsumer(JsonWebsocketConsumer):
         self.send_json(event)
 
     def react_message_echo(self, event):
-        self.send_json(event)
-
-    def audio_call_echo(self, event):
-        self.send_json(event) 
-
-    def voice_call_echo(self, event):
         self.send_json(event)

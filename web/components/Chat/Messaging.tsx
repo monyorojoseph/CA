@@ -1,10 +1,9 @@
 // import BgImage from 'images/chat_bg.jpg'
-import useWebSocket, { ReadyState } from 'react-use-websocket';
-import { useCredentials } from '../../utils/hooks'
+import useWebSocket from 'react-use-websocket';
+import { useCredentials, useWebsocketConncetionStatusHook } from '../../utils/hooks'
 import { useEffect, useState } from 'react';
 import { useMessageHistory } from '../../swr/chat';
 import { Message } from '../../utils/types';
-// import AudioCall from './AudioCall';
 import MessageBar from '../Message/MessageBar';
 import MessageBody from '../Message/MessageBody';
 import MessageInput from '../Message/MessageInput';
@@ -53,25 +52,15 @@ export default function Messaging({conversationName}: {conversationName:string})
     // read messages
     sendJsonMessage({type: "read_messages"})
 
-    const connectionStatus = {
-        [ReadyState.CONNECTING]: 'Connecting',
-        [ReadyState.OPEN]: 'Open',
-        [ReadyState.CLOSING]: 'Closing',
-        [ReadyState.CLOSED]: 'Closed',
-        [ReadyState.UNINSTANTIATED]: 'Uninstantiated',
-      }[readyState];
+    const {connectionStatus} = useWebsocketConncetionStatusHook(readyState);
+    console.log("[ MESSAGE ]" , connectionStatus)
+
     
     return (
         <div className="border border-neutral-500 border-l-2 space-y-2 relative">
             <MessageBar conversationName={conversationName}/>
             <MessageBody messageHistory={messageHistory}/>
             <MessageInput sendJsonMessage={sendJsonMessage}/>
-            {/* <div className='absolute top-5 bg-white left-1/2 
-            border rounded-md border-neutral-500'>
-                <div className='relative w-96 h-80  '>
-                    <AudioCall sendJsonMessage={sendJsonMessage} />
-                </div>
-            </div> */}
         </div>
     )
 }

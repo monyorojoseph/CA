@@ -1,3 +1,5 @@
+import { ReadyState } from 'react-use-websocket';
+
 // token hook
 export const useCredentials: any = ()=> {
     let access = ''
@@ -10,4 +12,14 @@ export const useCredentials: any = ()=> {
 
     return { access, refresh }
 }
-// user hook
+// ws connection state hook
+export const useWebsocketConncetionStatusHook = (readyState: ReadyState)=> {
+    const connectionStatus = {
+        [ReadyState.CONNECTING]: 'Connecting',
+        [ReadyState.OPEN]: 'Open',
+        [ReadyState.CLOSING]: 'Closing',
+        [ReadyState.CLOSED]: 'Closed',
+        [ReadyState.UNINSTANTIATED]: 'Uninstantiated',
+    }[readyState];
+    return {connectionStatus};
+}

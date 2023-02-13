@@ -14,6 +14,7 @@ const VideoCall = () => {
         stream.getTracks().forEach(track => {
           peerConnection.addTrack(track, stream);
         });
+        // stream.getTracks()
         peerConnection.ontrack = event => {
           if (remoteVideoRef.current) {
             remoteVideoRef.current.srcObject = event.streams[0];

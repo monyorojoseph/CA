@@ -25,3 +25,15 @@ export interface Convo {
     other_user: Person;
     last_message: Message;
 }
+export interface NewICECandidateMessage {
+    target: string;
+    type: 'new-ice-candidate';
+    candidate: RTCIceCandidate;
+  };
+
+  export interface NewVideoOfferMsg {
+    name: string;
+    target: string;
+    type: 'video-offer';
+    sdp: RTCSessionDescription
+  }
