@@ -13,6 +13,10 @@ class NotificationConsumer(JsonWebsocketConsumer):
 
         if not self.user.is_authenticated:
             return
+        # user id from url
+        user_id = self.scope["url_route"]["kwargs"]["user_id"]
+        if not user_id:
+            return
         
         self.notification_name = f'notification__{self.scope["url_route"]["kwargs"]["user_id"]}'
 

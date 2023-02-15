@@ -282,7 +282,7 @@ export default function AudioCall({target}:{
     //   if (target){
     //     makeCall()
     //   }
-    // }, [target])
+    // }, [user])
       
       
     return target ?(

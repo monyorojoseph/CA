@@ -37,7 +37,8 @@ export default function Messaging({conversationName}: {conversationName:string})
                     setMessageHistory([...messageHistory!, data['message']])                    
                     break; 
                 case "delete_message_echo":
-                    console.log(data)
+                    const newMessageHistory = messageHistory?.filter((message)=> message.id !== data['message_id'])
+                    setMessageHistory(newMessageHistory)
                     break;
                 case "react_message_echo":
                     console.log(data)
@@ -59,7 +60,7 @@ export default function Messaging({conversationName}: {conversationName:string})
     return (
         <div className="border border-neutral-500 border-l-2 space-y-2 relative">
             <MessageBar conversationName={conversationName}/>
-            <MessageBody messageHistory={messageHistory}/>
+            <MessageBody messageHistory={messageHistory} sendJsonMessage={sendJsonMessage}/>
             <MessageInput sendJsonMessage={sendJsonMessage}/>
         </div>
     )
