@@ -29,22 +29,37 @@ class NotificationConsumer(JsonWebsocketConsumer):
         )
     
     def receive_json(self, content, **kwargs):
+        target = content['target']
+        offer_to = f'notification__{target}'
+
         type = content['type']
         if type == "video-offer":
-            print(content)
-            pass
+            async_to_sync(self.channel_layer.group_send)(
+                offer_to, 
+                {"content": content, 
+                "type":"video_offer_echo"}
+            )
             
         if type == "video-answer":
-            print(content)
-            pass
+            async_to_sync(self.channel_layer.group_send)(
+                offer_to, 
+                {"content": content, 
+                "type":"video_answer_echo"}
+            )
         
         if type == "new-ice-candidate":
-            print(content)
-            pass
+            async_to_sync(self.channel_layer.group_send)(
+                offer_to, 
+                {"content": content, 
+                "type":"new_ice_candidate_echo"}
+            )
 
         if type == "hang-up":
-            print(content)
-            pass
+            async_to_sync(self.channel_layer.group_send)(
+                offer_to, 
+                {"content": content, 
+                "type":"hang_up_echo"}
+            )
 
     # def audio_call_echo(self, event):
     #     self.send_json(event) 

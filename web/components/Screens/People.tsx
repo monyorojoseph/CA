@@ -31,7 +31,7 @@ export default function People({setTab, setTarget, setConversationName}:{
 
                             <span className='px-4 text-lg text-green-500'>
                                 <IoMdCall className='cursor-pointer' 
-                                onClick={()=> setTarget(person.full_name)}/>
+                                onClick={()=> setTarget(person.id)}/>
                             </span>
                             <span className='px-4 text-lg text-green-500'>
                                 <BiMessageDetail className='cursor-pointer' 

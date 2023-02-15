@@ -21,11 +21,11 @@ export default function Navbar({tab, target, setTab}:{
                 </nav>
                 <Tabs tab={tab} setTab={setTab}/>
 
-            {target && <div className='fixed top-5 left-1/2 z-50'>
+            <div className={`fixed top-5 left-1/2 z-50 ${!target && 'hidden'}`}>
                 <div className='relative w-96 h-80 border-neutral-500 border rounded-md bg-white'>
                     <AudioCall target={target} />
                 </div>
-            </div>}
+            </div>
 
             </div>
         </header>
