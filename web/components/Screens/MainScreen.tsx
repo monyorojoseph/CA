@@ -1,30 +1,17 @@
-import { useState } from "react";
-import Navbar from "../Layout/Navbar";
+
 import Chats from "./Chats";
 import Calls from "./Calls";
 import People from "./People";
-
-export const TABS = {
-    Chats: "Chats",
-    Calls: "Calls",
-    People: "People"
-}
+import { TABS } from "../../utils/constantValues";
+import { useMainContext } from "../../contexts/MainContext";
 
 export default function MainScreen(){
-    const [ target, setTarget ] = useState<string>()
-    const [ conversationName, setConversationName ] = useState<string>()
-
-
-    const [ tab, setTab ] = useState<string>(TABS.Chats)
+    const { tab } = useMainContext()
     return (
-        <div className="min-h-screen space-y-1">
-        <Navbar tab={tab} setTab={setTab} target={target} />
         <main className="container mx-auto">
-            { tab === TABS.Chats && <Chats conversationName={conversationName} setConversationName={setConversationName}/>}
+            { tab === TABS.Chats && <Chats />}
             { tab === TABS.Calls && <Calls />}
-            { tab === TABS.People && <People setConversationName={setConversationName}
-            setTab={setTab} setTarget={setTarget}/>}
+            { tab === TABS.People && <People />}
         </main>
-        </div>
     )
 }

@@ -1,9 +1,8 @@
-import { TABS } from "../Screens/MainScreen"
+import { useMainContext } from "../../contexts/MainContext"
+import { TABS } from "../../utils/constantValues"
 
-export default function Tabs({tab, setTab}:{
-    tab: string
-    setTab: Function
-}){
+export default function Tabs(){
+    const { tab, setTab } = useMainContext()
     return (
         <div className="grid grid-cols-3 items-center">
             <span onClick={()=> setTab(TABS.Chats)} 

@@ -1,10 +1,9 @@
+import { useMainContext } from "../../contexts/MainContext";
 import Conversations from "../Chat/Converstions";
 import Messaging from "../Chat/Messaging";
 
-export default function Chats({ conversationName, setConversationName}: {
-    conversationName?: string;
-    setConversationName: Function;
-}){
+export default function Chats(){
+    const { conversationName, setConversationName} = useMainContext()
         
     return (
         <section className="grid grid-cols-6" style={{'height': '82.5vh'}}>

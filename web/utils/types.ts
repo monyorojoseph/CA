@@ -31,9 +31,16 @@ export interface NewICECandidateMessage {
     candidate: RTCIceCandidate;
   };
 
-  export interface NewVideoOfferMsg {
+export interface NewVideoOfferMsg {
     name: string;
     target: string;
     type: 'video-offer';
     sdp: RTCSessionDescription
   }
+
+export interface MainContextType {
+    conversationName: string | undefined;
+    setConversationName: Function;
+    tab: string;
+    setTab: Function
+} 

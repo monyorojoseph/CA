@@ -1,16 +1,14 @@
 import { BiMessageDetail } from 'react-icons/bi'
 import { usePeople, useUser } from '../../swr/user'
 import { Person } from '../../utils/types'
-import { TABS } from './MainScreen'
 import { IoMdCall } from 'react-icons/io'
+import { useMainContext } from '../../contexts/MainContext'
+import { TABS } from '../../utils/constantValues'
 
-export default function People({setTab, setTarget, setConversationName}:{
-    setTab: Function;
-    setConversationName: Function;
-    setTarget: Function;
-}){
+export default function People(){
     const { people, loading } = usePeople()
     const { user } = useUser()
+    const { setConversationName, setTab} = useMainContext()
 
     const createConversationName = (otherId: string)=> {
         const ids = [otherId, user.id ]
@@ -31,7 +29,8 @@ export default function People({setTab, setTarget, setConversationName}:{
 
                             <span className='px-4 text-lg text-green-500'>
                                 <IoMdCall className='cursor-pointer' 
-                                onClick={()=> setTarget(person.id)}/>
+                                // onClick={()=> setTarget(person.id)}/>
+                                />
                             </span>
                             <span className='px-4 text-lg text-green-500'>
                                 <BiMessageDetail className='cursor-pointer' 
