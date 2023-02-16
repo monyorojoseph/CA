@@ -1,19 +1,17 @@
-import Chats from "../components/Screens/Chats"
-import Navbar from "../components/Layout/Navbar"
-import Calls from "../components/Screens/Calls"
-import People from "../components/Screens/People"
-import { MainContextProvider, useMainContext } from "../contexts/MainContext"
-import { TABS } from "../utils/constantValues"
+import { MainContextProvider } from "../contexts/MainContext"
 import MainScreen from "../components/Screens/MainScreen"
+import Tabs from "../components/Tabs"
+import Notification from "../components/Notification";
 
 export default function Home(){
+    console.log('Home')
     return (
         <MainContextProvider>
-            <>
-            <div className="min-h-screen space-y-1">
-                <Navbar />
-                <MainScreen />
-            </div>
+            <>  <Notification />
+                <div className="min-h-screen space-y-1">
+                    <Tabs />
+                    <MainScreen />
+                </div>
             </>
         </MainContextProvider>
     )

@@ -1,10 +1,11 @@
+import { useMainContext } from "../../contexts/MainContext";
 import { useConversations } from "../../swr/chat"
 import { Convo } from "../../utils/types"
 
-export default function Conversations({ setConversationName}: {
-    setConversationName: Function;
-}){
+export default function Conversations(){
     const { conversations } = useConversations()
+    const { setConversationName} = useMainContext()
+
     return (
         <div className="border border-neutral-400 divide-y-2 
         border-r-0 overflow-y-auto h-full">

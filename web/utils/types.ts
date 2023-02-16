@@ -42,5 +42,12 @@ export interface MainContextType {
     conversationName: string | undefined;
     setConversationName: Function;
     tab: string;
-    setTab: Function
+    setTab: Function;
+    target: string | undefined;
+    setTarget: Function;
 } 
+export interface AuthContextType {
+    access: string | undefined;
+    refresh: string | undefined;
+    user: Person;
+}

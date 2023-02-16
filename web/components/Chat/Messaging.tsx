@@ -1,20 +1,25 @@
 // import BgImage from 'images/chat_bg.jpg'
 import useWebSocket from 'react-use-websocket';
 import { useCredentials, useWebsocketConncetionStatusHook } from '../../utils/hooks'
-import { useEffect, useState } from 'react';
+import { useEffect, useReducer } from 'react';
 import { useMessageHistory } from '../../swr/chat';
-import { Message } from '../../utils/types';
 import MessageBar from '../Message/MessageBar';
 import MessageBody from '../Message/MessageBody';
 import MessageInput from '../Message/MessageInput';
+import messageHistoryRedducer from '../../reducers/MessageHistoryReducer';
+import { useMainContext } from '../../contexts/MainContext';
 
-export default function Messaging({conversationName}: {conversationName:string}){
+export default function Messaging(){
     const { access } = useCredentials()
-    const { messages } = useMessageHistory(conversationName)
-    const [ messageHistory, setMessageHistory ] = useState<Array<Message>>()
+    const { conversationName} = useMainContext()
+    const { messages } = useMessageHistory(conversationName!)
+    const [ messageHistory, dispatch ] = useReducer(messageHistoryRedducer, [])
 
     useEffect(()=>{
-        setMessageHistory(messages)          
+        dispatch({
+            type: "load",
+            data: messages
+        })        
     }, [messages])
 
 
@@ -26,22 +31,23 @@ export default function Messaging({conversationName}: {conversationName:string})
         onMessage: (e)=> {
             const data = JSON.parse(e.data)
             switch(data.type){
-                case "chat_message_echo":
-                    setMessageHistory([...messageHistory!, data['message']])                    
+                case "chat_message_echo":                    
+                    dispatch({
+                        type: "append",
+                        data: data['message']
+                    })                    
                     break; 
-                case "delete_message_echo":
-                    const updatedMessageHistory = messageHistory?.filter((message)=> message.id !== data['message_id'])
-                    setMessageHistory(updatedMessageHistory)
-                    break;
-                case "react_message_echo":
-                    const updated_message = data['message']
-                    const updated = messageHistory?.forEach((message)=> {
-                        if (message.id === updated_message.id){
-                            return updated_message
-                        }
-                        return message
+                case "delete_message_echo":                                       
+                    dispatch({
+                        type: "remove",
+                        message_id: data['message_id']
                     })
-                    setMessageHistory(updated!)
+                    break;
+                case "react_message_echo":                          
+                    dispatch({
+                        type: "update",
+                        data: data['message']
+                    })
                     break                         
                 default:
                     console.error("Unknown message type!");
@@ -59,7 +65,7 @@ export default function Messaging({conversationName}: {conversationName:string})
     
     return (
         <div className="border border-neutral-500 border-l-2 space-y-2 relative">
-            <MessageBar conversationName={conversationName}/>
+            <MessageBar />
             <MessageBody messageHistory={messageHistory} sendJsonMessage={sendJsonMessage}/>
             <MessageInput sendJsonMessage={sendJsonMessage}/>
         </div>

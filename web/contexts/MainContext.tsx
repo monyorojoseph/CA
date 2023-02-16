@@ -7,16 +7,20 @@ const MainContext = createContext<MainContextType>({
     setTab: ()=> {},
     setConversationName: ()=> {},
     tab: '',
-    conversationName: ''
+    conversationName: '',
+    target: '',
+    setTarget: ()=> {}
 });
 
 export function MainContextProvider({children}: {children: JSX.Element}){
     const [ conversationName, setConversationName ] = useState<string>()
     const [ tab, setTab ] = useState<string>(TABS.Chats)
+    const [ target, setTarget ]= useState<string>()
 
     const contextValues = useMemo(()=> ({
         conversationName, tab, 
-        setTab, setConversationName
+        setTab, setConversationName,
+        target, setTarget
     }), [tab, conversationName])
     
     return (

@@ -5,53 +5,11 @@ import { NewICECandidateMessage, NewVideoOfferMsg } from '../../utils/types';
 import { useCredentials, useWebsocketConncetionStatusHook } from '../../utils/hooks';
 import useWebSocket from 'react-use-websocket';
 
-export default function AudioCall({target}:{
-    target?: string;}){
+export default function AudioCall(){
     const { user } = useUser()
     const { access } = useCredentials()
     const localVideoRef = useRef<HTMLVideoElement>(null);
     const remoteVideoRef = useRef<HTMLVideoElement>(null);  
-
-    const { readyState, sendJsonMessage } = useWebSocket(
-        access ? `ws://127.0.0.1:8000/notification/${user?.id}/` : null, {
-        queryParams: {
-            token: access ? access : "",
-        },         
-        onOpen: ()=> {
-            console.log("Connected")
-          }, 
-          onClose: ()=> {
-              console.log("Disconnected")
-          },
-          onMessage: (e)=> {
-              const data = JSON.parse(e.data)
-              console.log(data.content)
-              switch(data.type){ 
-                    case "video_offer_echo":
-                        console.log(data.content)
-                        // if (data.content.target === user.full_name){
-                        //   handleVideoOfferMsg(data.content)
-                        // }
-                        break
-                    case "video_answer_echo":
-                        // console.log(data.content)
-                        break
-                    case "new_ice_candidate_echo":
-                        // console.log(data.content)
-                        break
-                    case "hang_up_echo":
-                        // console.log(data.content)
-                        break                       
-                  default:
-                      console.error("Unknown message type!");
-                      break;
-              }  
-          
-        }
-    })
-
-    const {connectionStatus} = useWebsocketConncetionStatusHook(readyState);
-    console.log("[ NOTIFICATION ]" , connectionStatus) 
 
     // const name = user?.id
     // let myPeerConnection: RTCPeerConnection
@@ -276,16 +234,9 @@ export default function AudioCall({target}:{
       
     //     closeVideoCall();
     //   }
-
-    
-    // useEffect(()=>{
-    //   if (target){
-    //     makeCall()
-    //   }
-    // }, [user])
       
       
-    return target ?(
+    return (
         <div>
             <video ref={localVideoRef} autoPlay />
             <video ref={remoteVideoRef} autoPlay muted />
@@ -293,5 +244,5 @@ export default function AudioCall({target}:{
             {/* // onClick={()=>{}} disabled>
             //     <ImPhoneHangUp /></button> */}
         </div>
-    ): (<>suck dick</>)
+    )
 }

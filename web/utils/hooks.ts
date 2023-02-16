@@ -4,11 +4,12 @@ import { ReadyState } from 'react-use-websocket';
 export const useCredentials: any = ()=> {
     let access = ''
     let refresh = '' 
+    
     if (typeof window === 'undefined') return { access, refresh }
 
-    const credentials = localStorage.getItem('credentials')
+    const credentials = window.localStorage.getItem('credentials')
     if (credentials){
-        const cred = JSON.parse(localStorage.getItem('credentials') as string)
+        const cred = JSON.parse(window.localStorage.getItem('credentials') as string)
         access = cred['access']
         refresh = cred['refresh']
     }

@@ -1,9 +1,11 @@
 import { IoMdCall, IoMdSettings } from "react-icons/io"
 import { useConversation } from "../../swr/chat"
 import { FiVideo } from "react-icons/fi"
+import { useMainContext } from "../../contexts/MainContext"
 
-export default function MessageBar({conversationName}: {conversationName:string}) {
-    const { conversation } = useConversation(conversationName)
+export default function MessageBar() {
+    const { conversationName} = useMainContext()
+    const { conversation } = useConversation(conversationName!)
     return (
         <div className='p-2 bg-neutral-500 text-white 
         flex flex-row justify-between items-center'>
