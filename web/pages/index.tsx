@@ -1,18 +1,18 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import AuthScreen from "../components/Screens/AuthScreen";
-import MainScreen from "../components/Screens/MainScreen";
-import { useCredentials } from "../utils/hooks";
+import { useUser } from "../swr/user";
+import { useRouter } from "next/router";
 
 export default function Home() {
-  const [ token, setToken ] = useState<string>()
+  const { user } = useUser()
+  const router = useRouter()
+
+
   useEffect(()=> {
-    const { access } = useCredentials()
-    setToken(access)
-  },[])
-  return token ? (
-    <MainScreen />
-  ) :
-  (
-    <AuthScreen />
-  )
+    if(user){
+      router.push('/home')
+    }
+  },[user])
+
+  return <AuthScreen />
 }

@@ -83,19 +83,19 @@ class MessageConsumer(JsonWebsocketConsumer):
                 "message": MessageSerializer(message).data}
             )
         
-        if content_type == 'audio_call':
-            async_to_sync(self.channel_layer.group_send)(
-                self.conversation_name,
-                {"type": "audio_call_echo",
-                 "data": content['data']}
-            )
+        # if content_type == 'audio_call':
+        #     async_to_sync(self.channel_layer.group_send)(
+        #         self.conversation_name,
+        #         {"type": "audio_call_echo",
+        #          "data": content['data']}
+        #     )
 
-        if content_type == 'video_call':
-            async_to_sync(self.channel_layer.group_send)(
-                self.conversation_name,
-                {"type": "video_call_echo",
-                 "data": content['data']}
-            )
+        # if content_type == 'video_call':
+        #     async_to_sync(self.channel_layer.group_send)(
+        #         self.conversation_name,
+        #         {"type": "video_call_echo",
+        #          "data": content['data']}
+        #     )
 
 
 

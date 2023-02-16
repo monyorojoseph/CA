@@ -22,14 +22,7 @@ export default function Messaging({conversationName}: {conversationName:string})
         access ? `ws://127.0.0.1:8000/message/${conversationName}/` : null, {
         queryParams: {
             token: access ? access : "",
-        }, 
-    
-        onOpen: ()=> {
-          console.log("Connected")
-        }, 
-        onClose: ()=> {
-            console.log("Disconnected")
-        },
+        },  
         onMessage: (e)=> {
             const data = JSON.parse(e.data)
             switch(data.type){
@@ -37,11 +30,18 @@ export default function Messaging({conversationName}: {conversationName:string})
                     setMessageHistory([...messageHistory!, data['message']])                    
                     break; 
                 case "delete_message_echo":
-                    const newMessageHistory = messageHistory?.filter((message)=> message.id !== data['message_id'])
-                    setMessageHistory(newMessageHistory)
+                    const updatedMessageHistory = messageHistory?.filter((message)=> message.id !== data['message_id'])
+                    setMessageHistory(updatedMessageHistory)
                     break;
                 case "react_message_echo":
-                    console.log(data)
+                    const updated_message = data['message']
+                    const updated = messageHistory?.forEach((message)=> {
+                        if (message.id === updated_message.id){
+                            return updated_message
+                        }
+                        return message
+                    })
+                    setMessageHistory(updated!)
                     break                         
                 default:
                     console.error("Unknown message type!");

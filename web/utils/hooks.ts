@@ -3,11 +3,14 @@ import { ReadyState } from 'react-use-websocket';
 // token hook
 export const useCredentials: any = ()=> {
     let access = ''
-    let refresh = ''    
-    const credentials = JSON.parse(localStorage.getItem('credentials') as string)
+    let refresh = '' 
+    if (typeof window === 'undefined') return { access, refresh }
+
+    const credentials = localStorage.getItem('credentials')
     if (credentials){
-        access = credentials['access']
-        refresh = credentials['refresh']
+        const cred = JSON.parse(localStorage.getItem('credentials') as string)
+        access = cred['access']
+        refresh = cred['refresh']
     }
 
     return { access, refresh }

@@ -10,7 +10,6 @@ export default function AuthForm ({name}:{
         email: '',
         password: ''
     })
-
     const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>)=> {
         e.persist()
         setData({

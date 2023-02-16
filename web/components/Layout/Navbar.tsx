@@ -18,36 +18,30 @@ export default function Navbar({tab, target, setTab}:{
         queryParams: {
             token: access ? access : "",
         },         
-        onOpen: ()=> {
-            console.log("Connected")
-            }, 
-            onClose: ()=> {
-                console.log("Disconnected")
-            },
-            onMessage: (e)=> {
-                const data = JSON.parse(e.data)
-                console.log(data.content)
-                switch(data.type){ 
-                    case "video_offer_echo":
-                        console.log(data.content)
-                        // if (data.content.target === user.full_name){
-                        //   handleVideoOfferMsg(data.content)
-                        // }
-                        break
-                    case "video_answer_echo":
-                        // console.log(data.content)
-                        break
-                    case "new_ice_candidate_echo":
-                        // console.log(data.content)
-                        break
-                    case "hang_up_echo":
-                        // console.log(data.content)
-                        break                       
-                    default:
-                        console.error("Unknown message type!");
-                        break;
-                }               
-            }
+        onMessage: (e)=> {
+            const data = JSON.parse(e.data)
+            console.log(data.content)
+            switch(data.type){ 
+                case "video_offer_echo":
+                    console.log(data.content)
+                    // if (data.content.target === user.full_name){
+                    //   handleVideoOfferMsg(data.content)
+                    // }
+                    break
+                case "video_answer_echo":
+                    // console.log(data.content)
+                    break
+                case "new_ice_candidate_echo":
+                    // console.log(data.content)
+                    break
+                case "hang_up_echo":
+                    // console.log(data.content)
+                    break                       
+                default:
+                    console.error("Unknown message type!");
+                    break;
+            }               
+        }
     })
 
     const {connectionStatus} = useWebsocketConncetionStatusHook(readyState);
