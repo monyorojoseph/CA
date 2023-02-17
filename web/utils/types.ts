@@ -28,26 +28,33 @@ export interface Convo {
 export interface NewICECandidateMessage {
     target: string;
     type: 'new-ice-candidate';
-    candidate: RTCIceCandidate;
+    // candidate: RTCIceCandidate;
+    candidate: string;
+
   };
 
 export interface NewVideoOfferMsg {
     name: string;
     target: string;
     type: 'video-offer';
-    sdp: RTCSessionDescription
+    // sdp: RTCSessionDescription
+    sdp: string
+
   }
 
 export interface MainContextType {
     conversationName: string | undefined;
     setConversationName: Function;
-    tab: string;
-    setTab: Function;
-    target: string | undefined;
-    setTarget: Function;
+    callTarget: string | undefined;
+    setCallTarget: Function;
 } 
 export interface AuthContextType {
     access: string | undefined;
     refresh: string | undefined;
     user: Person;
+}
+
+export interface TabsContextType {
+    tab: string;
+    setTab: Function;
 }

@@ -1,14 +1,14 @@
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import JsonWebsocketConsumer
 
-class NotificationConsumer(JsonWebsocketConsumer):
+class CallConsumer(JsonWebsocketConsumer):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.user = None
-        self.notification_name = None
+        self.call_name = None
     
     def connect(self):
-        print("[ CONNECTED ] :: NOTIFICATION")
+        print("[ CONNECTED ] :: CALL")
         self.user = self.scope['user']
 
         if not self.user.is_authenticated:
@@ -18,23 +18,23 @@ class NotificationConsumer(JsonWebsocketConsumer):
         if not user_id:
             return
         
-        self.notification_name = f'notification__{self.scope["url_route"]["kwargs"]["user_id"]}'
+        self.call_name = f'call__{self.scope["url_route"]["kwargs"]["user_id"]}'
 
         async_to_sync(self.channel_layer.group_add)(
-            self.notification_name, self.channel_name
+            self.call_name, self.channel_name
         )
 
         self.accept()
     
     def disconnect(self, code):
-        print("[ DISCONNECTED ] :: NOTIFICATION")
+        print("[ DISCONNECTED ] :: CALL")
         async_to_sync(self.channel_layer.group_discard)(
-            self.notification_name, self.channel_name
+            self.call_name, self.channel_name
         )
     
     def receive_json(self, content, **kwargs):
         target = content['target']
-        offer_to = f'notification__{target}'
+        offer_to = f'call__{target}'
 
         type = content['type']
         if type == "video-offer":
@@ -64,9 +64,6 @@ class NotificationConsumer(JsonWebsocketConsumer):
                 {"content": content, 
                 "type":"hang_up_echo"}
             )
-
-    # def audio_call_echo(self, event):
-    #     self.send_json(event) 
 
     def video_offer_echo(self, event):
         self.send_json(event)

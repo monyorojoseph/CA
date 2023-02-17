@@ -4,11 +4,13 @@ import { Person } from '../../utils/types'
 import { IoMdCall } from 'react-icons/io'
 import { useMainContext } from '../../contexts/MainContext'
 import { TABS } from '../../utils/constantValues'
+import { useTabs } from '../../contexts/TabsContext'
 
 export default function People(){
     const { people, loading } = usePeople()
     const { user } = useUser()
-    const { setConversationName, setTab} = useMainContext()
+    const { setConversationName, setCallTarget} = useMainContext()
+    const { setTab } = useTabs()
 
     const createConversationName = (otherId: string)=> {
         const ids = [otherId, user.id ]
@@ -19,7 +21,7 @@ export default function People(){
     }
 
     return (
-        <div className='space-y-1'>
+        <div className='space-y-1' style={{'height': '85vh'}}>
             {
                 people?.map((person: Person)=> (
                     <div key={person.id}
@@ -29,8 +31,7 @@ export default function People(){
 
                             <span className='px-4 text-lg text-green-500'>
                                 <IoMdCall className='cursor-pointer' 
-                                // onClick={()=> setTarget(person.id)}/>
-                                />
+                                onClick={()=> setCallTarget(person.id)}/>
                             </span>
                             <span className='px-4 text-lg text-green-500'>
                                 <BiMessageDetail className='cursor-pointer' 

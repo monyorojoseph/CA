@@ -15,13 +15,15 @@ export const useUser = ()=> {
         return { user: data?.data}
     }
 
-    const user = window.localStorage.getItem('user')
-
-    if (!user){
+    const user = window.localStorage.getItem('user') as string
+    
+    if (user === undefined ){
+        
         const { data } = useSwr('/auth/users/me/', getService)
         window.localStorage.setItem('user', JSON.stringify(data?.data))
         return { user: data?.data}
     }
-
     return { user: JSON.parse(user) }
+    
+
 }

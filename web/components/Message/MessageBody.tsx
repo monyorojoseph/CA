@@ -18,7 +18,7 @@ export default function MessageBody({messageHistory, sendJsonMessage}: {
     return (
 
         <div className='p-2 space-y-2 overflow-y-auto' 
-        style={{"height": '65vh'}} >
+        style={{"height": '67vh'}} >
             {
                 messageHistory?.map((message: Message)=> (
 

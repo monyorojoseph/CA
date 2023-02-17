@@ -64,7 +64,7 @@ export default function Messaging(){
 
     
     return (
-        <div className="border border-neutral-500 border-l-2 space-y-2 relative">
+        <div className="border border-neutral-500 rounded-md space-y-2 relative" style={{'height': '85vh'}}>
             <MessageBar />
             <MessageBody messageHistory={messageHistory} sendJsonMessage={sendJsonMessage}/>
             <MessageInput sendJsonMessage={sendJsonMessage}/>
